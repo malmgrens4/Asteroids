@@ -2,7 +2,7 @@ var ship;
 
 function setup(){
     angleMode();
-    createCanvas(400, 400);
+    createCanvas(800, 800);
     ship = new Ship();
 }
 
