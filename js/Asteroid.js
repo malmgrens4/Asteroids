@@ -9,6 +9,18 @@ function Asteroid (position, size) {
     this.velocity = createVector();
     this.velocity.x = (getRandom() * maxVelocity) + minVelocity;
     this.velocity.y = (getRandom() * maxVelocity) + minVelocity;
+    var r = getRandom();
+    if (r < .25) {
+        this.velocity.x *= -1;
+        this.velocity.y *= -1;
+    }
+    if (r >= .25 && r < .5) {
+        this.velocity.y *= -1
+    }
+    if (r >= .5 && r < .75) {
+        this.velocity.x *= -1;
+    }
+    
     this.alive = true;
     
     this.update = function () {

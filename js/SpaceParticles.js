@@ -11,14 +11,14 @@ function SpaceParticle(position) {
     var vx = getRandom() * ((maxPartVel - minPartVel) + minPartVel);
     var vy = getRandom() * ((maxPartVel - minPartVel) + minPartVel);
     var r = getRandom();
-    if (r <= .25) {
+    if (r < .25) {
         vx *= -1;
         vy *= -1;
     }
-    if (r > .25 && r <= .5) {
+    if (r >= .25 && r < .5) {
         vy *= -1
     }
-    if (r > .5 && r <= .75) {
+    if (r >= .5 && r < .75) {
         vx *= -1;
     }
     this.velocity = (createVector(vx, vy));

@@ -6,6 +6,7 @@ function spawnAsteroid() {
     var position;
     switch (r) {
     case 0:
+            
         position = createVector(0, 0);
         break;
     case 1:
@@ -16,7 +17,7 @@ function spawnAsteroid() {
         break;
     case 3:
         position = createVector(width, height);
-        break;
+        
     }
     var size = (getRandom() * (maxSize - minSize)) + minSize;
     asteroids.push(new Asteroid(position, size));
