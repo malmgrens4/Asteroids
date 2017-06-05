@@ -107,7 +107,6 @@ function Ship() {
     }
     this.checkCollision = function (aspos) {
         var d = dist(aspos.position.x, aspos.position.y, this.position.x, this.position.y);
-        
         if (d < (aspos.size / 2) + this.size / 4) {
             this.explode();
         }
