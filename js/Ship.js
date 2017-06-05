@@ -8,6 +8,8 @@ function Ship() {
     this.acceleration = createVector(0, 0);
     this.size = 7;
     this.angle;
+    this.alive = true;
+    this.projectiles = [];
     
 
     this.show = function () {
@@ -25,9 +27,6 @@ function Ship() {
         var p3x = this.size/2;
         var p3y =  (this.size/2) * (Math.sqrt(3));
         
-        console.log("p1 - p2" + dist(p1x, p1y, p2x, p2y));
-        console.log("p2 - p3" + dist(p3x, p3y, p2x, p2y));
-        console.log("p3 - p1" + dist(p1x, p1y, p3x, p3y));
         //console.log(dist(p1x, p1y, p2x, p2y));
         
         triangle(p1x, p1y, p2x, p2y, p3x, p3y);
@@ -94,6 +93,18 @@ function Ship() {
         if (this.position.y < 0) {
             this.position.y = height;
         }
+        
+        for(var i =0; i < this.projectiles.length; i++){
+            this.projectiles[i].update();
+            this.projectiles[i].show();
+        }
+        for(var i = 0; i < asteroids.length; i++){
+             for(var j =0; j < this.projectiles.length; j++){
+                if(asteroids[i].checkCollision(this.projectiles[j].position)){
+                    this.projectiles.splice(j,1);
+                }
+             }
+        }
 
     }
 
@@ -114,8 +125,23 @@ function Ship() {
         }
 
         if (keyIsDown(ENTER)) {
-           
             console.log("angle: " + this.angle);
         }
+    }
+    this.mousePress = function () {
+        this.projectiles.push(new Projectile(this.position, this.angle));
+    }
+    
+    this.checkCollision = function (aspos) {
+        var d = dist(aspos.position.x, aspos.position.y, this.position.x, this.position.y);
+        //console.log(d);
+        if(d < (aspos.size/2) + this.size/4){
+            this.explode();
+        }
+    }
+    this.explode = function () {
+        this.alive = false;
+        //animation then end the game
+        
     }
 }

@@ -1,17 +1,24 @@
 var asteroids = [];
+new p5();
 function spawnAsteroid() {
-    var r = math.random() * 4;
+    var r = Math.random() * 4;
+    r = Math.floor(r);
     var position;
     //removes thisers
     switch (r) {
     case 0:
-        this.position = createVector(0, 0);
+        position = createVector(0, 0);
+        break;
     case 1:
-        this.position = createVector(width, 0);
+        position = createVector(width, 0);
+        break;
     case 2:
-        this.position = createVector(0, height);
+        position = createVector(0, height);
+        break;
     case 3:
-        this.position = createVector(width, height);
+        position = createVector(width, height);
+        break;
     }
-    asteroids.push(new Asteroid(this))
+    var size = (getRandom() * (maxSize - minSize)) + minSize;
+    asteroids.push(new Asteroid(position, size));
 }

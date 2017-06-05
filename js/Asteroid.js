@@ -1,14 +1,16 @@
-var maxSize = 80;
+var maxSize = 160;
 var minSize = 10;
 var maxVelocity = 2;
 var minVelocity = .01;
-function Asteroid (position) {
+function Asteroid (position, size) {
     
-    this.size = (getRandom() * maxSize) + minSize;
-    this.position = position;
+    this.size = size;
+    this.position = position.copy();
     this.velocity = createVector();
     this.velocity.x = (getRandom() * maxVelocity) + minVelocity;
     this.velocity.y = (getRandom() * maxVelocity) + minVelocity;
+    this.alive = true;
+    
     this.update = function () {
         this.position.add(this.velocity);
         if (this.position.x > width) {
@@ -25,12 +27,37 @@ function Asteroid (position) {
         }
         
         if(this.size < minSize){
-            asteroids.splice(1, asteroids.indexOf(this));
+           this.alive = false;
         }
+        
+        
 
     }
     this.show = function () {
-        rect(this.position.x, this.position.y, this.size, this.size);
+        
+        push();
+        stroke(255,255,255);
+        strokeWeight(1);
+        noFill();
+        ellipse(this.position.x, this.position.y, this.size);
+        pop();
+    }
+    this.split = function () {
+        asteroids.splice(asteroids.indexOf(this), 1);
+        var newSize = this.size/2;
+        var p1 = createVector(this.position.x + newSize, this.position.y);
+        var p2 = createVector(this.position.x - newSize, this.position.y);
+        asteroids.push(new Asteroid(this.position, newSize));
+        asteroids.push(new Asteroid(this.position, newSize));
+    }
+    
+    this.checkCollision = function (projpos) {
+        var d = dist(this.position.x, this.position.y, projpos.x, projpos.y);
+        //alert(d);
+        if(d < this.size/2){
+            this.split();
+            return true;
+        }
     }
     
 }
