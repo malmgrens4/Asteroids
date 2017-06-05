@@ -15,7 +15,7 @@ function setup() {
     ship = new Ship();
     asteroids = [];
     spaceParticles = [];
-    setInterval(spawnAsteroid, 5000);
+    
 }
 
 function draw() {
@@ -76,3 +76,4 @@ function updateDisplay() {
     $("#consecutive").html(ship.consecutive);
     $("#duration").html(duration);
 }
+setInterval(spawnAsteroid, 5000);
