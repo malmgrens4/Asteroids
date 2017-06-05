@@ -1,10 +1,10 @@
-var asteroids = [];
+
 new p5();
+var spaceParticles = [];
 function spawnAsteroid() {
     var r = Math.random() * 4;
     r = Math.floor(r);
     var position;
-    //removes thisers
     switch (r) {
     case 0:
         position = createVector(0, 0);

@@ -8,7 +8,7 @@ function Projectile(position, angle) {
     
     
     this.update = function () {
-        this.position.add(this.velocity);
+        this.position.add(this.velocity); 
     }
     this.show = function () {
         push();

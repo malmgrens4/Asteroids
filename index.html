@@ -10,19 +10,26 @@
     <link rel="shortcut icon" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <style>
-        body {
-            padding-top: 50px;
-        }
-        
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="css/main.css"> 
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    </head>
 
 <body>
+    
+    <div class="display">
+        <p>Score:</p>
+        <div id="score"> 0 </div>
+        <p>Consecutive:</p>
+        <div id="consecutive">0 </div>
+        <p>Time:</p>
+        <div id="duration">0 </div>
+        <p>High-Score:</p>
+        <div id="high-score">0 </div>
+    
+    </div>
+    <div class="new-game blink_me" id="new-game"></div>
+  
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/p5.js"></script>
@@ -31,7 +38,7 @@
     <script src="js/homePage.js"></script>
     <script src="js/Ship.js"></script>
     <script src="js/Projectile.js"></script>
-    
+    <script src="js/SpaceParticles.js"></script>
 </body>
 
 </html>

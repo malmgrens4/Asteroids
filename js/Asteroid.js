@@ -28,6 +28,7 @@ function Asteroid (position, size) {
         
         if(this.size < minSize){
            this.alive = false;
+           this.explode();
         }
         
         
@@ -53,11 +54,14 @@ function Asteroid (position, size) {
     
     this.checkCollision = function (projpos) {
         var d = dist(this.position.x, this.position.y, projpos.x, projpos.y);
-        //alert(d);
         if(d < this.size/2){
             this.split();
             return true;
         }
+        return false;
+    }
+    this.explode = function () {
+        spawnSpaceParticles(this.position);
     }
     
 }

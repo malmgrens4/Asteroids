@@ -9,54 +9,34 @@ function Ship() {
     this.size = 7;
     this.angle;
     this.alive = true;
+    this.consecutive = 0;
     this.projectiles = [];
-    
-
     this.show = function () {
         push();
         translate(this.position.x, this.position.y);
-        rotate(this.angle + -55);//find out why this works
+        rotate(this.angle + -55); //find out why this works
         //rotate(0);
         strokeWeight(1);
         stroke(255, 255, 255);
         noFill();
-        var p1x = -this.size/2;
-        var p1y = (this.size/2) * (Math.sqrt(3));
+        var p1x = -this.size / 2;
+        var p1y = (this.size / 2) * (Math.sqrt(3));
         var p2x = 0;
         var p2y = 0;
-        var p3x = this.size/2;
-        var p3y =  (this.size/2) * (Math.sqrt(3));
-        
+        var p3x = this.size / 2;
+        var p3y = (this.size / 2) * (Math.sqrt(3));
         //console.log(dist(p1x, p1y, p2x, p2y));
-        
         triangle(p1x, p1y, p2x, p2y, p3x, p3y);
-        strokeWeight(0);
-        fill(255,0,0);
-        rect(p1x, p1y, 1,1);
-        fill(0,255,0);
-        rect(p2x, p2y, 1,1);
-        fill(0,0,255);
-        rect(p3x, p3y, 1,1);
-        fill(255,0,255);
-        rect(0,0,1,-40);
         
         pop();
-
-
     }
-    
     this.update = function () {
         //console.log(Math.abs(this.velocity.x));
-        
-        this.angle = atan2(mouseY -  this.position.y, mouseX - this.position.x);
-        
-        
+        this.angle = atan2(mouseY - this.position.y, mouseX - this.position.x);
         this.velocity.add(this.acceleration);
-
         if (Math.abs(this.acceleration.x) > maxShipAcc || Math.abs(this.acceleration.y) > maxShipAcc) {
             this.acceleration = createVector(0, 0);
         }
-
         if (Math.abs(this.velocity.x) > maxShipVel) {
             if (this.velocity.x != 0) {
                 var vx = this.velocity.x / Math.abs(this.velocity.x);
@@ -69,17 +49,9 @@ function Ship() {
                 this.velocity.y = maxShipVel * vy;
             }
         }
-
-
-//        console.log("x:" + this.velocity.x);
-//        console.log("y:" + this.velocity.y);
+        //        console.log("x:" + this.velocity.x);
+        //        console.log("y:" + this.velocity.y);
         this.acceleration = createVector(0, 0);
-
-
-
-
-
-
         this.position.add(this.velocity);
         if (this.position.x > width) {
             this.position.x = 0;
@@ -93,24 +65,27 @@ function Ship() {
         if (this.position.y < 0) {
             this.position.y = height;
         }
-        
-        for(var i =0; i < this.projectiles.length; i++){
+        for (var i = 0; i < this.projectiles.length; i++) {
             this.projectiles[i].update();
             this.projectiles[i].show();
+    
+            if (this.projectiles[i].position.x > width || this.projectiles[i].position.x < 0 || this.projectiles[i].position.y > height || this.projectiles[i].position.y < 0) {
+                this.consecutive = 0;
+                this.projectiles.splice(i, 1);
+            }
         }
-        for(var i = 0; i < asteroids.length; i++){
-             for(var j =0; j < this.projectiles.length; j++){
-                if(asteroids[i].checkCollision(this.projectiles[j].position)){
-                    this.projectiles.splice(j,1);
+        for (var i = 0; i < asteroids.length; i++) {
+            for (var j = 0; j < this.projectiles.length; j++) {
+                if (asteroids[i].checkCollision(this.projectiles[j].position)) {
+                    this.consecutive += 1;
+                    addScore();
+                    this.projectiles.splice(j, 1);
                 }
-             }
+            }
         }
-
+        
     }
-
-
     this.onPress = function (keyCode) {
-
         if (keyIsDown(UP_ARROW)) {
             this.acceleration.y -= accShipIncrement;
         }
@@ -123,7 +98,6 @@ function Ship() {
         if (keyIsDown(RIGHT_ARROW)) {
             this.acceleration.x += accShipIncrement;
         }
-
         if (keyIsDown(ENTER)) {
             console.log("angle: " + this.angle);
         }
@@ -131,17 +105,17 @@ function Ship() {
     this.mousePress = function () {
         this.projectiles.push(new Projectile(this.position, this.angle));
     }
-    
     this.checkCollision = function (aspos) {
         var d = dist(aspos.position.x, aspos.position.y, this.position.x, this.position.y);
-        //console.log(d);
-        if(d < (aspos.size/2) + this.size/4){
+        
+        if (d < (aspos.size / 2) + this.size / 4) {
             this.explode();
         }
     }
     this.explode = function () {
         this.alive = false;
-        //animation then end the game
-        
+        spawnSpaceParticles(this.position);
+        this.position.x = -100;
+        promptNewGame();
     }
 }

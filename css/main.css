@@ -1,0 +1,64 @@
+body,
+html {
+   position: relative;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    border: 2px solid #FFFFFF;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    position: relative;
+    
+}
+.display {
+    font-size: 1.5em;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
+}
+
+.new-game {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2em;
+    position: absolute;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0px;
+    color: whitesmoke;
+    text-align: center;
+    padding-left: 45%;
+    padding-top: 10px;
+}
+
+
+
+.container {
+ 
+}
+
+p {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
+
+
