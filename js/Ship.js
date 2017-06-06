@@ -15,7 +15,6 @@ function Ship() {
         push();
         translate(this.position.x, this.position.y);
         rotate(this.angle + -55); //find out why this works
-        //rotate(0);
         strokeWeight(1);
         stroke(255, 255, 255);
         noFill();
@@ -25,13 +24,11 @@ function Ship() {
         var p2y = 0;
         var p3x = this.size / 2;
         var p3y = (this.size / 2) * (Math.sqrt(3));
-        //console.log(dist(p1x, p1y, p2x, p2y));
-        triangle(p1x, p1y, p2x, p2y, p3x, p3y);
         
+        triangle(p1x, p1y, p2x, p2y, p3x, p3y);
         pop();
     }
     this.update = function () {
-        //console.log(Math.abs(this.velocity.x));
         this.angle = atan2(mouseY - this.position.y, mouseX - this.position.x);
         this.velocity.add(this.acceleration);
         if (Math.abs(this.acceleration.x) > maxShipAcc || Math.abs(this.acceleration.y) > maxShipAcc) {
@@ -49,8 +46,7 @@ function Ship() {
                 this.velocity.y = maxShipVel * vy;
             }
         }
-        //        console.log("x:" + this.velocity.x);
-        //        console.log("y:" + this.velocity.y);
+        
         this.acceleration = createVector(0, 0);
         this.position.add(this.velocity);
         if (this.position.x > width) {
@@ -68,9 +64,10 @@ function Ship() {
         for (var i = 0; i < this.projectiles.length; i++) {
             this.projectiles[i].update();
             this.projectiles[i].show();
-    
             if (this.projectiles[i].position.x > width || this.projectiles[i].position.x < 0 || this.projectiles[i].position.y > height || this.projectiles[i].position.y < 0) {
                 this.consecutive = 0;
+                killsInRow = 0;
+                slowBool = false;
                 this.projectiles.splice(i, 1);
             }
         }
@@ -83,25 +80,28 @@ function Ship() {
                 }
             }
         }
-        
     }
     this.onPress = function (keyCode) {
-        if (keyIsDown(UP_ARROW)) {
+        if (keyIsDown(87)) {
             this.acceleration.y -= accShipIncrement;
         }
-        if (keyIsDown(DOWN_ARROW)) {
+        if (keyIsDown(83)) {
             this.acceleration.y += accShipIncrement;
         }
-        if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(65)) {
             this.acceleration.x -= accShipIncrement;
         }
-        if (keyIsDown(RIGHT_ARROW)) {
+        if (keyIsDown(68)) {
             this.acceleration.x += accShipIncrement;
         }
-        if (keyIsDown(ENTER)) {
-            console.log("angle: " + this.angle);
+        if(keyIsDown(16)){
+            slowBool=true;
+        }
+        else{
+            slowBool=false;
         }
     }
+    
     this.mousePress = function () {
         this.projectiles.push(new Projectile(this.position, this.angle));
     }

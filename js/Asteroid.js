@@ -2,8 +2,8 @@ var maxSize = 160;
 var minSize = 10;
 var maxVelocity = 2;
 var minVelocity = .01;
-function Asteroid (position, size) {
-    
+
+function Asteroid(position, size) {
     this.size = size;
     this.position = position.copy();
     this.velocity = createVector();
@@ -20,9 +20,7 @@ function Asteroid (position, size) {
     if (r >= .5 && r < .75) {
         this.velocity.x *= -1;
     }
-    
     this.alive = true;
-    
     this.update = function () {
         this.position.add(this.velocity);
         if (this.position.x > width) {
@@ -37,19 +35,14 @@ function Asteroid (position, size) {
         if (this.position.y < 0) {
             this.position.y = height;
         }
-        
-        if(this.size < minSize){
-           this.alive = false;
-           this.explode();
+        if (this.size < minSize) {
+            this.alive = false;
+            this.explode();
         }
-        
-        
-
     }
     this.show = function () {
-        
         push();
-        stroke(255,255,255);
+        stroke(255, 255, 255);
         strokeWeight(1);
         noFill();
         ellipse(this.position.x, this.position.y, this.size);
@@ -57,16 +50,15 @@ function Asteroid (position, size) {
     }
     this.split = function () {
         asteroids.splice(asteroids.indexOf(this), 1);
-        var newSize = this.size/2;
+        var newSize = this.size / 2;
         var p1 = createVector(this.position.x + newSize, this.position.y);
         var p2 = createVector(this.position.x - newSize, this.position.y);
         asteroids.push(new Asteroid(this.position, newSize));
         asteroids.push(new Asteroid(this.position, newSize));
     }
-    
     this.checkCollision = function (projpos) {
         var d = dist(this.position.x, this.position.y, projpos.x, projpos.y);
-        if(d < this.size/2){
+        if (d < this.size / 2) {
             this.split();
             return true;
         }
@@ -74,9 +66,16 @@ function Asteroid (position, size) {
     }
     this.explode = function () {
         spawnSpaceParticles(this.position);
+        
+        killsInRow += .5;
+       
+        if (killsInRow >= 3) {
+            slowMoBar.time += (slowLimit/10);
+            consecutiveCheck = 0;
+        }
     }
-    
 }
-function getRandom(){
+
+function getRandom() {
     return Math.random();
 }
