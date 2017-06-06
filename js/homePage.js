@@ -14,6 +14,12 @@ var consecutiveCheck = 0;
 var slowDuration;
 var slowLimit;
 var slowMoBar;
+var gamePaused = false;
+var spawn = setInterval(function () {
+    if(!gamePaused){
+        spawnAsteroid();
+    }
+}, 5000);
 function setup() {
     frameRate(60);
     slowFlag = false;
@@ -78,6 +84,16 @@ function keyPressed() {
             $("#new-game").html("");
         }
     }
+    if(keyCode === 80){
+        if(!gamePaused){
+            noLoop();
+            gamePaused=true;
+        }
+       else{
+            loop();
+            gamePaused =false;
+        }
+    }
 }
 
 function mousePressed() {
@@ -101,4 +117,3 @@ function updateDisplay() {
     $("#consecutive").html(ship.consecutive);
     $("#duration").html(duration);
 }
-setInterval(spawnAsteroid, 5000);
