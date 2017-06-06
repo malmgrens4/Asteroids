@@ -17,6 +17,6 @@ function spawnAsteroid() {
     case 3:
         position = createVector(width, height);
     }
-    var size = (getRandom() * (maxSize - minSize)) + minSize;as
+    var size = (getRandom() * (maxSize - minSize)) + minSize;
     asteroids.push(new Asteroid(position, size));
 }
