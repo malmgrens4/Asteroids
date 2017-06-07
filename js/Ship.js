@@ -95,11 +95,11 @@ function Ship() {
         if (keyIsDown(16)) {
             slowBool = true;
         }
-        if (keyCode === 32) {
-            this.bomb();
-        }
         else {
             slowBool = false;
+        }
+        if (keyCode === 32) {
+            this.bomb();
         }
     }
     this.mousePress = function () {
