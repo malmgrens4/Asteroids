@@ -14,6 +14,7 @@ var consecutiveCheck = 0;
 var slowDuration;
 var slowLimit;
 var slowMoBar;
+var bombs;
 var gamePaused = false;
 var spawn = setInterval(function () {
     if(!gamePaused){
@@ -38,6 +39,9 @@ function setup() {
     slowDuration = 0;
     slowLimit = 500;
     slowMoBar = new SlowMoBar(slowLimit);
+    bombs = 3;
+    bombBar = new BombBar(bombs);
+    
     
 }
 
@@ -46,6 +50,7 @@ function draw() {
     updateDisplay();
     duration+=timeIncrement;
     background(51);
+    bombBar.show();
     if (ship.alive) {
         ship.update();
         ship.show();
@@ -94,14 +99,15 @@ function keyPressed() {
             gamePaused =false;
         }
     }
+    ship.onPress(keyCode);
 }
 
 function mousePressed() {
     ship.mousePress();
 }
 
-function addScore() {
-    score += 10 + (10 * Math.floor(duration / 1000)) + ship.consecutive;
+function addScore(points) {
+    score += points + (10 * Math.floor(duration / 1000)) + ship.consecutive;
 }
 
 function promptNewGame() {

@@ -49,12 +49,13 @@ function Asteroid(position, size) {
         pop();
     }
     this.split = function () {
-        asteroids.splice(asteroids.indexOf(this), 1);
+        
         var newSize = this.size / 2;
         var p1 = createVector(this.position.x + newSize, this.position.y);
         var p2 = createVector(this.position.x - newSize, this.position.y);
         asteroids.push(new Asteroid(this.position, newSize));
         asteroids.push(new Asteroid(this.position, newSize));
+        asteroids.splice(asteroids.indexOf(this), 1);
     }
     this.checkCollision = function (projpos) {
         var d = dist(this.position.x, this.position.y, projpos.x, projpos.y);

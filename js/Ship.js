@@ -24,7 +24,6 @@ function Ship() {
         var p2y = 0;
         var p3x = this.size / 2;
         var p3y = (this.size / 2) * (Math.sqrt(3));
-        
         triangle(p1x, p1y, p2x, p2y, p3x, p3y);
         pop();
     }
@@ -46,7 +45,6 @@ function Ship() {
                 this.velocity.y = maxShipVel * vy;
             }
         }
-        
         this.acceleration = createVector(0, 0);
         this.position.add(this.velocity);
         if (this.position.x > width) {
@@ -75,7 +73,7 @@ function Ship() {
             for (var j = 0; j < this.projectiles.length; j++) {
                 if (asteroids[i].checkCollision(this.projectiles[j].position)) {
                     this.consecutive += 1;
-                    addScore();
+                    addScore(10);
                     this.projectiles.splice(j, 1);
                 }
             }
@@ -94,14 +92,16 @@ function Ship() {
         if (keyIsDown(68)) {
             this.acceleration.x += accShipIncrement;
         }
-        if(keyIsDown(16)){
-            slowBool=true;
+        if (keyIsDown(16)) {
+            slowBool = true;
         }
-        else{
-            slowBool=false;
+        if (keyCode === 32) {
+            this.bomb();
+        }
+        else {
+            slowBool = false;
         }
     }
-    
     this.mousePress = function () {
         this.projectiles.push(new Projectile(this.position, this.angle));
     }
@@ -110,6 +110,18 @@ function Ship() {
         if (d < (aspos.size / 2) + this.size / 4) {
             this.explode();
         }
+    }
+    this.bomb = function () {
+        if (bombBar.bombsLeft > 0) {
+            var asteroidsCopy = asteroids.slice();
+            addScore(asteroidsCopy.length);
+            for (var i = 0; i < asteroidsCopy.length; i++) {
+                asteroidsCopy[i].split();
+            }
+            
+        }
+        
+        bombBar.bombsLeft -= 1;
     }
     this.explode = function () {
         this.alive = false;
