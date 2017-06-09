@@ -99,7 +99,9 @@ function keyPressed() {
             gamePaused =false;
         }
     }
-    ship.onPress(keyCode);
+    if(ship.alive){
+        ship.onPress(keyCode);
+    }
 }
 
 function mousePressed() {

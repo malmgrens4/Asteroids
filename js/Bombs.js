@@ -3,8 +3,8 @@ function BombBar(numBombs) {
     this.width = 50;
     this.height = 10;
     this.gap = 10;
-    this.bombSize = 5;
-    this.position = createVector(this.bombSize, 5);
+    this.bombSize = 10;
+    this.position = createVector(this.bombSize, 7);
     this.update = function () {
         
     }
